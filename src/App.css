@@ -28,6 +28,138 @@
   color: #61dafb;
 }
 
+:root {
+  --background-tab: rgb(3, 47, 48);
+  --text-primary: white;
+}
+
+.NavBar {
+  background-color: rgb(3, 47, 48);
+  color: rgb(250, 250, 250);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5rem;
+  padding: 0 1rem;
+}
+
+.NavBar ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.NavBar a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.NavBar a:hover {
+  text-decoration: underline;
+}
+
+.TabBar {
+  background: var(--background-tab);
+  transition: all 0.5s;
+  padding: 1px;
+}
+
+.TabNavigation {
+  display: flex;
+  justify-content: center;
+}
+
+.tab-item {
+  display: inline-flex;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 15px;
+  cursor: pointer;
+  border: none;
+  background: rgb(32, 170, 176);
+  color: #fff;
+}
+
+.tab-item.active {
+  border-color: #000;
+  background: rgb(0, 130, 136);
+  color: #fff;
+}
+
+.SearchWrapper {
+  display: flex;
+  justify-content: center; /* Centers the form horizontally */
+  align-items: center;    /* Aligns content vertically */
+  min-height: 10vh;       /* Takes half the viewport height */
+  background-color: #f9f9f9; /* Light background for distinction */
+  padding: 20px;
+}
+
+/* Form styles for TripForm */
+.TripForm {
+  display: flex;
+  flex-direction: row; /* Aligns inputs horizontally */
+  gap: 10px;           /* Adds space between inputs and button */
+  background-color: #fff; /* White background for form */
+  border: 1px solid #ddd; /* Light border for definition */
+  border-radius: 8px;     /* Rounded corners */
+  padding: 10px 15px;     /* Space inside the form */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+}
+
+/* Input field styles */
+.TripInput {
+  height: 40px;
+  width: 180px;         /* Fixed width for uniformity */
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.TripInput:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Subtle glow */
+}
+
+.react-datepicker-wrapper {
+  width: 160px; /* Matches input field width */
+}
+
+.react-datepicker__input-container input {
+  height: 40px;
+  width: 100%;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+}
+
+.TripForm button {
+  height: 40px;
+  background-color: rgb(32, 170, 176);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  padding: 0 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: center; /* Aligns button with inputs */
+}
+
+.TripForm button:hover {
+  background-color: rgb(0, 130, 136);
+}
+
+
+
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

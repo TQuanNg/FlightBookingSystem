@@ -4,12 +4,53 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import {HomePage} from './components/Home';
+import {LoginPage} from './components/login/Login';
+import {AboutPage} from './components/About';
+import {ErrorPage} from './components/ErrorPage';
+import {PurchaseHistory} from './components/PurchaseHistory'
+import { RouterProvider, createBrowserRouter} from "react-router-dom";
+
+
+const router = createBrowserRouter([{
+  path: '/',
+  element: <App />,
+  errorElement: <ErrorPage />
+,
+  children: [
+    {
+      index: true,  // This makes HomePage the default for the root path "/"
+      element: <HomePage />,
+    },
+    {
+      path: '/history',
+      element: <PurchaseHistory />
+    },
+    {
+      path: '/about',
+      element: <AboutPage />,
+    },
+    {
+      path: '/login',
+      element: <LoginPage />,
+    },
+    {
+      path: '/signup',
+      element: <SignUpPage />
+    }
+  ]
+}]);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <RouterProvider router={router}>
+        <App />
+    </RouterProvider>
 );
+
+{/*<React.StrictMode>
+    <App />
+  </React.StrictMode>*/}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
