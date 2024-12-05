@@ -16,7 +16,7 @@ export const OneWaySearch = () => {
 
     return(
         <div className="SearchWrapper">
-            <form className="TripForm" >
+            <form className="TripForm" onSubmit={handleSubmit}>
                 <input type="text" className="TripInput"
                 placeholder='Enter your destination'
                 value={destintation}

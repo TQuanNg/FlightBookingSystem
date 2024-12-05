@@ -6,9 +6,12 @@ import reportWebVitals from './reportWebVitals';
 
 import {HomePage} from './components/Home';
 import {LoginPage} from './components/login/Login';
+import {SignUpPage} from './components/login/SignUp';
 import {AboutPage} from './components/About';
 import {ErrorPage} from './components/ErrorPage';
 import {PurchaseHistory} from './components/PurchaseHistory'
+import { BookingSummary } from './components/BookingSummary';
+import { ConfirmationPage } from './components/Confirmation';
 import { RouterProvider, createBrowserRouter} from "react-router-dom";
 
 
@@ -37,6 +40,14 @@ const router = createBrowserRouter([{
     {
       path: '/signup',
       element: <SignUpPage />
+    },
+    {
+      path: '/booking-summary',
+      element: <BookingSummary />
+    },
+    {
+      path: '/confirmation',
+      element: <ConfirmationPage />
     }
   ]
 }]);
