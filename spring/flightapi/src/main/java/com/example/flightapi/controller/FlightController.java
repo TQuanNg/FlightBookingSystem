@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.flightapi.service.FlightService;
-import com.example.flightapi.model.Flight; 
+import com.example.flightapi.model.Flight;
 
 @RestController
 @RequestMapping("/flights")
@@ -26,14 +26,15 @@ public class FlightController {
             @RequestParam LocalDateTime startTime,
             @RequestParam LocalDateTime endTime,
             @RequestParam int numTravelers) {
-            List<Flight> flights = flightService.searchFlights(departureCity, arrivalCity, startTime, endTime, numTravelers);
+        List<Flight> flights = flightService.searchFlights(departureCity, arrivalCity, startTime, endTime,
+                numTravelers);
 
-            if (flights.isEmpty()) {
-                // Return a 404 Not Found if no flights are found
-                return ResponseEntity.notFound().build();
-            }
-            
-            // Return the list of flights with a 200 OK status
-            return ResponseEntity.ok(flights);
+        if (flights.isEmpty()) {
+            // Return a 404 Not Found if no flights are found
+            return ResponseEntity.notFound().build();
+        }
+
+        // Return the list of flights with a 200 OK status
+        return ResponseEntity.ok(flights);
     }
 }

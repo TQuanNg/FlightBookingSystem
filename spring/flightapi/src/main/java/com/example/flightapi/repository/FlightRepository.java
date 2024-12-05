@@ -1,6 +1,10 @@
 package com.example.flightapi.repository;
-import com.example.flightapi.model.Flight; 
+import com.example.flightapi.model.Flight;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -31,5 +35,10 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
         @Param("endTime") LocalDateTime endTime,
         @Param("numTravelers") Integer numTravelers
     );
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Flight f SET f.availableSeats = f.availableSeats - :numberOfTravelers WHERE f.flightId = :flightId")
+    int updateAvailableSeats(@Param("flightId") Long flightId, @Param("numberOfTravelers") int numberOfTravelers);
       
 }

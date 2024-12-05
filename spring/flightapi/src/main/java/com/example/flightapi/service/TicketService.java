@@ -1,6 +1,8 @@
 package com.example.flightapi.service;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +26,8 @@ public class TicketService {
     private final PurchaseRepository purchaseRepository;
 
     @Autowired
-    public TicketService(TicketRepository ticketRepository, UserRepository userRepository, FlightRepository flightRepository, PurchaseRepository purchaseRepository) {
+    public TicketService(TicketRepository ticketRepository, UserRepository userRepository,
+            FlightRepository flightRepository, PurchaseRepository purchaseRepository) {
         this.ticketRepository = ticketRepository;
         this.userRepository = userRepository;
         this.flightRepository = flightRepository;
@@ -43,10 +46,11 @@ public class TicketService {
      * SELECT flight_id, departure_city, arrival_city, departure_tume, arrival_time
      * FROM Flights
      * 
-     * SELECT ticket_id, total_price, ticket_date, number_of_tralevers, boarding_group
+     * SELECT ticket_id, total_price, ticket_date, number_of_tralevers,
+     * boarding_group
      * FROM Ticket
      */
-     
+
     public BookingSummaryDTO bookTicket(Long userId, Long flightId, Integer numberOfTravelers, String boardingGroup) {
         Optional<User> user = userRepository.findById(userId);
         Optional<Flight> flightOptional = flightRepository.findById(flightId);
@@ -69,6 +73,12 @@ public class TicketService {
         purchaseHistory.setTicket(savedTicket);
         purchaseRepository.save(purchaseHistory);
 
+        // Update available seats
+        int updatedSeats = flightRepository.updateAvailableSeats(flightId, numberOfTravelers);
+        if (updatedSeats == 0) {
+            throw new RuntimeException("Failed to update available seats. Flight may be overbooked.");
+        }
+
         // Prepare the DTO with all details
         BookingSummaryDTO summary = new BookingSummaryDTO();
         summary.setTicketId(ticket.getTicketId());
@@ -88,7 +98,29 @@ public class TicketService {
         return flight.getPrice().multiply(BigDecimal.valueOf(numberOfTravelers));
     }
 
-    public List<PurchaseHistory> getPurchaseHistory(Long userId) {
-        return purchaseRepository.findByUserId(userId);
+    public List<PurchaseHistoryDTO> getPurchaseHistory(Long userId) {
+        List<Object[]> rawResults = purchaseRepository.findByUserId(userId);
+
+        // Manually map the raw results to DTOs
+        List<PurchaseHistoryDTO> purchaseHistoryList = rawResults.stream()
+                .map(result -> new PurchaseHistoryDTO(
+                        convertToLocalDateTime(result[0]), // purchaseDate
+                        convertToLocalDateTime(result[1]), // depart
+                        (String) result[2], // origin
+                        (String) result[3], // destination
+                        convertToLocalDateTime(result[4]), // arrival
+                        (String) result[5], // flightNumber
+                        (BigDecimal) result[6] // price
+                ))
+                .toList();
+
+        return purchaseHistoryList;
+    }
+
+    private LocalDateTime convertToLocalDateTime(Object timestamp) {
+        if (timestamp instanceof Timestamp) {
+            return ((Timestamp) timestamp).toLocalDateTime();
+        }
+        return null;
     }
 }
