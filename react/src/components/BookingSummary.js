@@ -70,16 +70,16 @@ export const BookingSummary = () => {
         <div>
             <h2>Booking Summary</h2>
             <p>
+                <strong>Total Cost: </strong>
+                ${flightDetails.price * numberOfTravelers}
+            </p>
+            <p>
                 <strong>Departure: </strong>
                 {flightDetails.departureCity} at {new Date(flightDetails.departureTime).toLocaleString()}
             </p>
             <p>
                 <strong>Arrival: </strong>
                 {flightDetails.arrivalCity} at {new Date(flightDetails.arrivalTime).toLocaleString()}
-            </p>
-            <p>
-                <strong>Price: </strong>
-                ${flightDetails.price}
             </p>
             <p>
                 <strong>Number of travelers: </strong>{numberOfTravelers}

@@ -65,7 +65,7 @@ export const LoginPage = () => {
                         onChange={(e) => setUsername(e.target.value)}
                         required />
 
-                    <input type="text" className="TripInput" placeholder='Enter your passwprd'
+                    <input type="password" className="TripInput" placeholder='Enter your passwprd'
                         onChange={(e) => setPassword(e.target.value)}
                         required />
 

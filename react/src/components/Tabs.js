@@ -8,10 +8,10 @@ export default function Tabs() {
           label: "Roundtrip",
           content: <RoundTripSearch />,
         },
-        {
+        /*{
           label: "One-way",
           content: <OneWaySearch />,
-        },
+        },*/
     ]
 
     function handleChange(currentTabIndex) {

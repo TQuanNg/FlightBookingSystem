@@ -4,19 +4,23 @@ import { DropdownMenu } from './DropdownMenu';
 
 export default function NavBar() {
     const [isLoggedIn, setLoggedIn] = useState(false);
-    const [user, setUser] = useState(null);
     const navigate = useNavigate();   
     
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if(token) {
-            setLoggedIn(true);
-        }
+        setLoggedIn(!!token);
 
-        const fetchUserData = async () => {
+        const handleStorageChange = () => {
+            const token = localStorage.getItem('token');
+            setLoggedIn(!!token);
+        };
 
-        }
-    },[])
+        window.addEventListener('storage', handleStorageChange);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    })
 
     const handleLogout = () => {
         localStorage.removeItem('token');

@@ -56,8 +56,9 @@ export const RoundTripSearch = () => {
 
     return(
         <div>
-            <div className="SearchWrapper">
             {searchError && <div className="ErrorSearchWrapper">{searchError}</div>}
+            <div className="SearchWrapper">
+            
                 <form className="TripForm" onSubmit={handleSubmit}>
                     <input type="text" className="TripInput"
                     placeholder='Enter your destination'
