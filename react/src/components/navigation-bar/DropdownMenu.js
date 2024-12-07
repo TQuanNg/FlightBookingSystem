@@ -14,7 +14,6 @@ export const DropdownMenu = ({ handleLogout }) =>  {
             {dropdownVisible && (
                 <div className="Dropdown-menu">
                     <Link to="/history">History</Link>
-                    <Link to="/profile">Profile</Link>
                     <button onClick={handleLogout}>Logout</button>
                 </div>
             )}
