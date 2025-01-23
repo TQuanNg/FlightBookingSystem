@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.flightapi.model.Entity.Flight;
 import com.example.flightapi.service.FlightService;
-import com.example.flightapi.model.Flight;
 
 @RestController
 @RequestMapping("/flights")

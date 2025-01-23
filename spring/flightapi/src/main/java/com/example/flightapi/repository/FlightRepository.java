@@ -1,12 +1,12 @@
 package com.example.flightapi.repository;
-import com.example.flightapi.model.Flight;
-
 import jakarta.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import com.example.flightapi.model.Entity.Flight;
 
 import java.time.LocalDateTime;
 import java.util.List;

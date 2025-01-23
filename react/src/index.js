@@ -12,6 +12,7 @@ import {ErrorPage} from './components/ErrorPage';
 import {PurchaseHistory} from './components/PurchaseHistory'
 import { BookingSummary } from './components/BookingSummary';
 import { ConfirmationPage } from './components/Confirmation';
+import { BookingCart } from './components/BookingCart';
 import { RouterProvider, createBrowserRouter} from "react-router-dom";
 
 
@@ -48,6 +49,10 @@ const router = createBrowserRouter([{
     {
       path: '/confirmation',
       element: <ConfirmationPage />
+    },
+    {
+      path: '/cart',
+      element: <BookingCart />
     }
   ]
 }]);

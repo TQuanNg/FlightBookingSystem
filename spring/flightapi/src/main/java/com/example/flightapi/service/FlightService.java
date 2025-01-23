@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.flightapi.model.Entity.Flight;
 import com.example.flightapi.repository.FlightRepository;
-import com.example.flightapi.model.Flight;
 
 @Service
 public class FlightService {

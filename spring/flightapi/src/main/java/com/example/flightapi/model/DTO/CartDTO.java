@@ -1,31 +1,51 @@
-package com.example.flightapi.service;
+package com.example.flightapi.model.DTO;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-import lombok.AllArgsConstructor;
-//import lombok.Getter;
-import lombok.NoArgsConstructor;
-//import lombok.Setter;
-
-@NoArgsConstructor
-@AllArgsConstructor
-public class BookingSummaryDTO {
-    private Long ticketId;
+public class CartDTO {
+    private Long flightId;
+    private Long cartId;
     private String departurePlace;
     private String departureTime;
     private String arrivalPlace;
     private String arrivalTime;
     private BigDecimal price;
-    private LocalDateTime purchaseDate;
     private Integer numberOfTravelers;
-    private String boardingGroup;
     
-    public Long getTicketId() {
-        return ticketId;
+    public CartDTO(Long flightId, String departurePlace, String departureTime, String arrivalPlace, String arrivalTime,
+            BigDecimal price, Integer numberOfTravelers) {
+        this.flightId = flightId;
+        this.departurePlace = departurePlace;
+        this.departureTime = departureTime;
+        this.arrivalPlace = arrivalPlace;
+        this.arrivalTime = arrivalTime;
+        this.price = price;
+        this.numberOfTravelers = numberOfTravelers;
     }
-    public void setTicketId(Long ticketId) {
-        this.ticketId = ticketId;
+
+    public CartDTO(Long cartId, Long flightId, String departurePlace, String arrivalPlace,
+            BigDecimal price, Integer numberOfTravelers) {
+        this.cartId = cartId;
+        this.flightId = flightId;
+        this.departurePlace = departurePlace;
+        this.arrivalPlace = arrivalPlace;
+        this.price = price;
+        this.numberOfTravelers = numberOfTravelers;
+    }
+
+    public Long getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(Long cartId) {
+        this.cartId = cartId;
+    }
+
+    public Long getFlightId() {
+        return flightId;
+    }
+    public void setFlightId(Long flightId) {
+        this.flightId = flightId;
     }
     public String getDeparturePlace() {
         return departurePlace;
@@ -57,22 +77,14 @@ public class BookingSummaryDTO {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-    public LocalDateTime getPurchaseDate() {
-        return purchaseDate;
-    }
-    public void setPurchaseDate(LocalDateTime purchaseDate) {
-        this.purchaseDate = purchaseDate;
-    }
     public Integer getNumberOfTravelers() {
         return numberOfTravelers;
     }
     public void setNumberOfTravelers(Integer numberOfTravelers) {
         this.numberOfTravelers = numberOfTravelers;
     }
-    public String getBoardingGroup() {
-        return boardingGroup;
-    }
-    public void setBoardingGroup(String boardingGroup) {
-        this.boardingGroup = boardingGroup;
-    }
+
+   
+
+    
 }

@@ -1,4 +1,4 @@
-package com.example.flightapi.model;
+package com.example.flightapi.model.Entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

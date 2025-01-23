@@ -9,14 +9,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.flightapi.model.Flight;
-import com.example.flightapi.model.PurchaseHistory;
-import com.example.flightapi.model.Ticket;
-import com.example.flightapi.model.User;
+import com.example.flightapi.model.DTO.BookingSummaryDTO;
+import com.example.flightapi.model.DTO.PurchaseHistoryDTO;
+import com.example.flightapi.model.Entity.Flight;
+import com.example.flightapi.model.Entity.PurchaseHistory;
+import com.example.flightapi.model.Entity.Ticket;
+import com.example.flightapi.model.Entity.User;
+import com.example.flightapi.repository.CartRepository;
 import com.example.flightapi.repository.FlightRepository;
 import com.example.flightapi.repository.PurchaseRepository;
 import com.example.flightapi.repository.TicketRepository;
 import com.example.flightapi.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class TicketService {
@@ -24,14 +29,21 @@ public class TicketService {
     private final UserRepository userRepository;
     private final FlightRepository flightRepository;
     private final PurchaseRepository purchaseRepository;
+    private final CartRepository cartRepository;
 
     @Autowired
     public TicketService(TicketRepository ticketRepository, UserRepository userRepository,
-            FlightRepository flightRepository, PurchaseRepository purchaseRepository) {
+            FlightRepository flightRepository, PurchaseRepository purchaseRepository, CartRepository cartRepository) {
         this.ticketRepository = ticketRepository;
         this.userRepository = userRepository;
         this.flightRepository = flightRepository;
         this.purchaseRepository = purchaseRepository;
+        this.cartRepository = cartRepository;
+    }
+
+    @Transactional
+    public void deleteCartItem(Long userId, Long cartId) {
+        cartRepository.deleteByUserIdAndCartItemId(userId, cartId);
     }
 
     /*
@@ -42,6 +54,8 @@ public class TicketService {
      * 
      * Save it to PurchaseHistory
      * 
+     * Since this method change database, transactional is required
+     * 
      * This class should be similar to following SQL commands
      * SELECT flight_id, departure_city, arrival_city, departure_tume, arrival_time
      * FROM Flights
@@ -50,36 +64,53 @@ public class TicketService {
      * boarding_group
      * FROM Ticket
      */
-
-    public BookingSummaryDTO bookTicket(Long userId, Long flightId, Integer numberOfTravelers, String boardingGroup) {
+    @Transactional
+    public BookingSummaryDTO bookTicket(Long userId, Long flightId, Long cartId, Integer numberOfTravelers, String boardingGroup) {
         Optional<User> user = userRepository.findById(userId);
         Optional<Flight> flightOptional = flightRepository.findById(flightId);
         Flight flight = flightOptional.orElseThrow(() -> new RuntimeException("Flight not found"));
 
         BigDecimal totalPrice = calculateTotal(flight, numberOfTravelers);
 
+        Ticket ticket = createTicket(user, flight, numberOfTravelers, boardingGroup, totalPrice);
+        Ticket savedTicket = ticketRepository.save(ticket);
+
+        // Add the ticket to Purchase History
+        PurchaseHistory purchaseHistory = addToPurchaseHistory(user, savedTicket);
+        purchaseRepository.save(purchaseHistory);
+
+        updateAvailableSeats(flightId, numberOfTravelers);
+        
+        deleteCartItem(userId, cartId);
+
+        return prepareBookingSummary(savedTicket, flight, totalPrice, numberOfTravelers, boardingGroup);
+    }
+
+    private Ticket createTicket(Optional<User> user, Flight flight, Integer numberOfTravelers, String boardingGroup, BigDecimal totalPrice) {
         Ticket ticket = new Ticket();
         ticket.setUserId(user.get());
         ticket.setFlightId(flight);
         ticket.setNumberOfTravelers(numberOfTravelers);
         ticket.setBoardingGroup(boardingGroup);
         ticket.setTotalPrice(totalPrice);
+        return ticket;
+    }
 
-        Ticket savedTicket = ticketRepository.save(ticket);
-
-        // Add the ticket to Purchase History
+    private PurchaseHistory addToPurchaseHistory(Optional<User> user, Ticket savedTicket) {
         PurchaseHistory purchaseHistory = new PurchaseHistory();
         purchaseHistory.setUser(user.get());
         purchaseHistory.setTicket(savedTicket);
-        purchaseRepository.save(purchaseHistory);
+        return purchaseHistory;
+    }
 
-        // Update available seats
+    private void updateAvailableSeats(Long flightId, Integer numberOfTravelers) {
         int updatedSeats = flightRepository.updateAvailableSeats(flightId, numberOfTravelers);
         if (updatedSeats == 0) {
             throw new RuntimeException("Failed to update available seats. Flight may be overbooked.");
         }
+    }
 
-        // Prepare the DTO with all details
+    private BookingSummaryDTO prepareBookingSummary(Ticket ticket, Flight flight, BigDecimal totalPrice, Integer numberOfTravelers, String boardingGroup) {
         BookingSummaryDTO summary = new BookingSummaryDTO();
         summary.setTicketId(ticket.getTicketId());
         summary.setDeparturePlace(flight.getDepartureCity());
@@ -90,7 +121,6 @@ public class TicketService {
         summary.setPurchaseDate(ticket.getTicketDate());
         summary.setNumberOfTravelers(numberOfTravelers);
         summary.setBoardingGroup(boardingGroup);
-
         return summary;
     }
 

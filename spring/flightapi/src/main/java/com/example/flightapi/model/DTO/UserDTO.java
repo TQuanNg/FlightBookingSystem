@@ -1,4 +1,4 @@
-package com.example.flightapi.service;
+package com.example.flightapi.model.DTO;
 
 import lombok.NoArgsConstructor;
 

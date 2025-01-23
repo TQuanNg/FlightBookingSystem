@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const BookingSummary = () => {
     const [bookingDetails, setBookingDetails] = useState(null);
@@ -11,6 +10,10 @@ export const BookingSummary = () => {
     const purchaseDate = new Date();
     const formattedDate = purchaseDate.toISOString().split('T').join(' ').split('.')[0];
 
+    const location = useLocation();
+    const { selectedItem } = location.state || {};
+
+    // should be value return directly from back end
     useEffect(() => {
         const storedBookingDetails = JSON.parse(localStorage.getItem('bookingDetails'));
         const storedUserDetails = JSON.parse(localStorage.getItem('user'));
@@ -40,11 +43,15 @@ export const BookingSummary = () => {
     const handleConfirm = async (e) => {
 
         try {
-            const response = await fetch(`http://localhost:8080/book?userId=${userDetails.user.id}&flightId=${flightDetails.flightId}&numberOfTravelers=${numberOfTravelers}&boardingGroup=${boardingGroup}`,
+            const response = await fetch(`http://localhost:8080/book?userId=${userDetails.user.id}` +
+        `&flightId=${selectedItem.flightId}` +
+        `&cartId=${selectedItem.cartId}` +
+        `&numberOfTravelers=${selectedItem.numberOfTravelers}` +
+        `&boardingGroup=${boardingGroup}`,
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ flightDetails, userObject }), //////
+                    //body: JSON.stringify({ flightDetails, userObject }), //////
                 })
 
             const result = await response.json();
@@ -66,6 +73,17 @@ export const BookingSummary = () => {
 
     }
 
+    
+
+    if (!selectedItem) {
+        return (
+            <div style={{ textAlign: "center", marginTop: "20px" }}>
+                <h2>No booking details found!</h2>
+                <button onClick={() => navigate(-1)}>Go Back</button>
+            </div>
+        );
+    }
+
     return (
         <div>
             <h2>Booking Summary</h2>
@@ -75,14 +93,14 @@ export const BookingSummary = () => {
             </p>
             <p>
                 <strong>Departure: </strong>
-                {flightDetails.departureCity} at {new Date(flightDetails.departureTime).toLocaleString()}
+                {selectedItem.departurePlace} at {new Date(flightDetails.departureTime).toLocaleString()}
             </p>
             <p>
                 <strong>Arrival: </strong>
-                {flightDetails.arrivalCity} at {new Date(flightDetails.arrivalTime).toLocaleString()}
+                {selectedItem.arrivalPlace} at {new Date(flightDetails.arrivalTime).toLocaleString()}
             </p>
             <p>
-                <strong>Number of travelers: </strong>{numberOfTravelers}
+                <strong>Number of travelers: </strong>{selectedItem.numberOfTravelers}
 
             </p>
             <p>

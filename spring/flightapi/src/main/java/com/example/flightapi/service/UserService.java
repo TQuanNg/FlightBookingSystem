@@ -7,9 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.flightapi.model.DTO.UserDTO;
+import com.example.flightapi.model.Entity.User;
 import com.example.flightapi.repository.UserRepository;
 import com.example.flightapi.util.JwtUtil;
-import com.example.flightapi.model.User;
 
 @Service
 public class UserService {
@@ -79,5 +80,4 @@ public class UserService {
                 user.getLastName(),
                 user.getEmail());
     }
-
 }

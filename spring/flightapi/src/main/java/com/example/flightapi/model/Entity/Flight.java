@@ -1,4 +1,4 @@
-package com.example.flightapi.model;
+package com.example.flightapi.model.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.flightapi.service.UserService;
 import com.example.flightapi.util.JwtUtil;
-import com.example.flightapi.service.ApiResponse;
-import com.example.flightapi.service.UserDTO;
-import com.example.flightapi.model.User; 
+import com.example.flightapi.model.DTO.UserDTO;
+import com.example.flightapi.model.Entity.User;
+import com.example.flightapi.service.ApiResponse; 
 
 @RestController
 @RequestMapping("/api/users")

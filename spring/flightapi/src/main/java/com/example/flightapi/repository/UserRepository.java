@@ -2,9 +2,9 @@ package com.example.flightapi.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.Optional;
+import com.example.flightapi.model.Entity.User;
 
-import com.example.flightapi.model.User; 
+import java.util.Optional; 
 
 /*
  * UserRepository automatically inherits basic methods like save(), findById(), findAll(), delete(), etc., 

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.example.flightapi.model.PurchaseHistory;
+import com.example.flightapi.model.Entity.PurchaseHistory;
 
 
 public interface PurchaseRepository extends JpaRepository<PurchaseHistory, Long> {
