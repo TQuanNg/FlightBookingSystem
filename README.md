@@ -6,7 +6,6 @@ A full-stack flight booking system providing a seamless and secure booking exper
 - **Frontend:** React, HTML, CSS
 - **Backend:** Spring Boot, Java
 - **Database:** PostgreSQL
-- **ORM:** Hibernate
 - **Authentication:** JWT (JSON Web Token)
 
 ## 🏗️ Project Architecture
@@ -23,7 +22,7 @@ The backend follows a clean and scalable layered architecture:
 - 📄 **Booking History:** View and manage past flight bookings.
 
 ### 1️⃣ Clone the Repository
-```bash
+
 git clone https://github.com/YourUsername/FlightBookingSystem.git
 cd FlightBookingSystem
 2️⃣ Backend Setup (Spring Boot)
@@ -34,7 +33,7 @@ cd backend
 The backend server runs on http://localhost:8080.
 
 3️⃣ Database Setup (PostgreSQL)
-Make sure PostgreSQL is running and create the required database:
+Make sure PostgreSQL is running and create the required database
 
 CREATE DATABASE flight_booking;
 Update database configurations in application.properties.
