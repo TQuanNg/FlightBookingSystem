@@ -47,9 +47,6 @@ public class TicketController {
         return ResponseEntity.ok("Cart cleared successfully.");
     }
 
-    
-
-
     @PostMapping("/book")
     public ResponseEntity<BookingSummaryDTO> bookTicket(
             @RequestParam Long userId,

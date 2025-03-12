@@ -30,11 +30,8 @@ public class FlightController {
                 numTravelers);
 
         if (flights.isEmpty()) {
-            // Return a 404 Not Found if no flights are found
             return ResponseEntity.notFound().build();
         }
-
-        // Return the list of flights with a 200 OK status
         return ResponseEntity.ok(flights);
     }
 }

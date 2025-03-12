@@ -1,9 +1,5 @@
 package com.example.flightapi.service;
 
-//import lombok.Getter;
-//import lombok.Setter;
-
-
 public class ApiResponse {
     private boolean success;
     private String message;
@@ -43,5 +39,4 @@ public class ApiResponse {
     public void setData(Object data) {
         this.data = data;
     }
-
 }
