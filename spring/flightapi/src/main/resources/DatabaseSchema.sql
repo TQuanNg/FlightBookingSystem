@@ -1,7 +1,4 @@
-package com.example.flightapi.model.Entity;
-
-/*
- * CREATE TABLE Users (
+CREATE TABLE Users (
     user_id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
@@ -62,8 +59,3 @@ CREATE TABLE CartItem (
     FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (flight_id) REFERENCES Flights(flight_id) ON DELETE CASCADE
 );
-
- */
-public class Booking {
-    
-}
