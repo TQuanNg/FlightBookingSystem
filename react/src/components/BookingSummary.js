@@ -34,7 +34,6 @@ export const BookingSummary = () => {
     }
 
     const { flightDetails } = bookingDetails;
-    const { userObject } = userDetails;
     const numberOfTravelers = parseInt(traveler.traveler, 10);
     const boardingGroup = 'A';
 
@@ -44,14 +43,13 @@ export const BookingSummary = () => {
 
         try {
             const response = await fetch(`http://localhost:8080/book?userId=${userDetails.user.id}` +
-        `&flightId=${selectedItem.flightId}` +
-        `&cartId=${selectedItem.cartId}` +
-        `&numberOfTravelers=${selectedItem.numberOfTravelers}` +
-        `&boardingGroup=${boardingGroup}`,
+                `&flightId=${selectedItem.flightId}` +
+                `&cartId=${selectedItem.cartId}` +
+                `&numberOfTravelers=${selectedItem.numberOfTravelers}` +
+                `&boardingGroup=${boardingGroup}`,
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    //body: JSON.stringify({ flightDetails, userObject }), //////
                 })
 
             const result = await response.json();
@@ -72,8 +70,6 @@ export const BookingSummary = () => {
         }
 
     }
-
-    
 
     if (!selectedItem) {
         return (
@@ -101,15 +97,12 @@ export const BookingSummary = () => {
             </p>
             <p>
                 <strong>Number of travelers: </strong>{selectedItem.numberOfTravelers}
-
             </p>
             <p>
                 <strong>Boarding Group: </strong>Available Upon Checking
-
             </p>
             <p>
                 <strong>Purchase Date: </strong>{formattedDate}
-
             </p>
 
             <button onClick={handleConfirm}>Confirm</button>

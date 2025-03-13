@@ -4,23 +4,23 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import {HomePage} from './components/Home';
-import {LoginPage} from './components/login/Login';
-import {SignUpPage} from './components/login/SignUp';
-import {AboutPage} from './components/About';
-import {ErrorPage} from './components/ErrorPage';
-import {PurchaseHistory} from './components/PurchaseHistory'
+import { HomePage } from './components/Home';
+import { LoginPage } from './components/login/Login';
+import { SignUpPage } from './components/login/SignUp';
+import { AboutPage } from './components/About';
+import { ErrorPage } from './components/ErrorPage';
+import { PurchaseHistory } from './components/PurchaseHistory'
 import { BookingSummary } from './components/BookingSummary';
 import { ConfirmationPage } from './components/Confirmation';
 import { BookingCart } from './components/BookingCart';
-import { RouterProvider, createBrowserRouter} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 
 const router = createBrowserRouter([{
   path: '/',
   element: <App />,
   errorElement: <ErrorPage />
-,
+  ,
   children: [
     {
       index: true,  // This makes HomePage the default for the root path "/"
@@ -60,8 +60,8 @@ const router = createBrowserRouter([{
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <RouterProvider router={router}>
-        <App />
-    </RouterProvider>
+    <App />
+  </RouterProvider>
 );
 
 {/*<React.StrictMode>

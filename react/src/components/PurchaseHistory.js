@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const PurchaseHistory = () => {
@@ -6,7 +6,7 @@ export const PurchaseHistory = () => {
     const [history, setHistory] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
-    const userId = 0; // Replace this with the actual user ID from your context or state.
+    const userId = 0; // Replace this with the actual user ID
 
     useEffect(() => {
         const storedUserDetails = JSON.parse(localStorage.getItem('user'));
@@ -42,12 +42,12 @@ export const PurchaseHistory = () => {
         fetchPurchaseHistory();
     }, [userDetails]);
 
-    return(
+    return (
         <div>
             <h2>Purchase History</h2>
             {errorMessage && (
                 <div style={{ color: 'red', textAlign: 'center', marginBottom: '20px' }}>
-                {errorMessage}
+                    {errorMessage}
                 </div>
             )}
             {userId === 0 ? (
