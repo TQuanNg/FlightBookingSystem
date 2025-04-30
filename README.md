@@ -25,6 +25,7 @@ The backend follows a clean and scalable layered architecture:
 
 git clone https://github.com/YourUsername/FlightBookingSystem.git
 cd FlightBookingSystem
+
 2️⃣ Backend Setup (Spring Boot)
 Navigate to the backend folder and run:
 
