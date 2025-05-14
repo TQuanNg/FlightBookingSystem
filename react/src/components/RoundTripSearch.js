@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { FlightList } from './FlightList';
+import { AutoCompleteInput } from './AutoCompleteInput/AutoCompleteInput';
 
 export const RoundTripSearch = () => {
     const [destination, setDestination] = useState('');
@@ -12,8 +13,9 @@ export const RoundTripSearch = () => {
     const [flights, setFlights] = useState([]);
     const [error, setError] = useState('');
     const [searchError, setSearchError] = useState('');
+    const [total, SetTotal] = useState('')
 
-    
+
     // function to connect to backend java and query through database
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,13 +29,13 @@ export const RoundTripSearch = () => {
         const endTime = endDate.toISOString().slice(0, 19);
 
         try {
-            const response = await fetch (`http://localhost:8080/flights/search?departureCity=${depart}&arrivalCity=${destination}&startTime=${startTime}&endTime=${endTime}&numTravelers=${traveler}`, {
+            const response = await fetch(`http://localhost:8080/flights/search?departureCity=${depart}&arrivalCity=${destination}&startTime=${startTime}&endTime=${endTime}&numTravelers=${traveler}`, {
                 method: 'GET',
                 header: {
                     'Content-Type': 'application/json',
                 },
             });
-            
+
             const result = await response.json();
 
             if (response.ok) {
@@ -54,35 +56,37 @@ export const RoundTripSearch = () => {
         }
     }
 
-    return(
+    return (
         <div>
             {searchError && <div className="ErrorSearchWrapper">{searchError}</div>}
             <div className="SearchWrapper">
-            
+
                 <form className="TripForm" onSubmit={handleSubmit}>
-                    <input type="text" className="TripInput"
-                    placeholder='Enter your destination'
-                    value={destination}
-                    onChange={(e) => setDestination(e.target.value)} />
+                    <AutoCompleteInput
+                        placeholder="Enter your destination"
+                        value={destination}
+                        onChange={setDestination}
+                    />
+
+                    <AutoCompleteInput
+                        placeholder="Enter your Departure"
+                        value={depart}
+                        onChange={setDepart}
+                    />
 
                     <input type="text" className="TripInput"
-                    placeholder='Enter your Departure'
-                    value={depart}
-                    onChange={(e) => setDepart(e.target.value)} />
-
-                    <input type="text" className="TripInput"
-                    placeholder='Enter number of traveler'
-                    value={traveler}
-                    onChange={(e) => setTraveler(e.target.value)} />
+                        placeholder='Enter number of traveler'
+                        value={traveler}
+                        onChange={(e) => setTraveler(e.target.value)} />
 
                     <DatePicker selected={startDate} onChange={(startDate) => setStartDate(startDate)} />
                     <DatePicker selected={endDate} onChange={(endDate) => setEndDate(endDate)} minDate={startDate} />
-                    
+
                     <button type='submit'>Submit</button>
                 </form>
             </div>
 
-            <FlightList flights={flights} traveler={traveler} error={error}/>
+            <FlightList flights={flights} traveler={traveler} error={error} />
         </div>
     )
 }
