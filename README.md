@@ -30,12 +30,14 @@ cd FlightBookingSystem
 Make sure PostgreSQL is running and create the required database
 
 CREATE DATABASE flight_booking;
+
 Update database configurations in application.properties.
 
 3️⃣ Install Dependencies and Run the App
 From the root folder, run:
 
 npm install
+
 npm start
 
 
