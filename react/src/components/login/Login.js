@@ -16,7 +16,6 @@ export const LoginPage = () => {
         e.preventDefault();
 
         if (!username || !password) {
-            //alert("Both username and password are required.");
             setErrorMessage("Both username and password are required.");
             return;
         }

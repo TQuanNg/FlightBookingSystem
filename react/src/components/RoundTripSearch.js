@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { FlightList } from './FlightList';
@@ -13,10 +13,18 @@ export const RoundTripSearch = () => {
     const [flights, setFlights] = useState([]);
     const [error, setError] = useState('');
     const [searchError, setSearchError] = useState('');
-    const [total, SetTotal] = useState('')
+
+    useEffect(() => {
+        const stored = localStorage.getItem('pendingSearch');
+        if (stored) {
+            const { flights, traveler } = JSON.parse(stored);
+            setFlights(flights);     
+            setTraveler(traveler);
+            localStorage.removeItem('pendingSearch'); // optional: clear after restoring
+        }
+    }, []);
 
 
-    // function to connect to backend java and query through database
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -63,13 +71,13 @@ export const RoundTripSearch = () => {
 
                 <form className="TripForm" onSubmit={handleSubmit}>
                     <AutoCompleteInput
-                        placeholder="Enter your destination"
+                        placeholder="Leaving from"
                         value={destination}
                         onChange={setDestination}
                     />
 
                     <AutoCompleteInput
-                        placeholder="Enter your Departure"
+                        placeholder="Going to"
                         value={depart}
                         onChange={setDepart}
                     />

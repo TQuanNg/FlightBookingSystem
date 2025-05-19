@@ -1,0 +1,17 @@
+{
+  "name": "flightapi",
+  "version": "1.0.0",
+  "description": "A full-stack flight booking system providing a seamless and secure booking experience for users. Built with React, Spring Boot, and PostgreSQL.",
+  "main": "index.js",
+  "scripts": {
+  "start": "concurrently \"npm run client\" \"npm run server\"",
+  "client": "cd react && npm start",
+  "server": "cd spring/flightapi && mvnw.cmd spring-boot:run"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

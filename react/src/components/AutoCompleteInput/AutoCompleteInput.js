@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import airports from '../../airports.json';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import './style.css';
 
 export const AutoCompleteInput = ({ value, onChange, placeholder }) => {
@@ -32,8 +34,14 @@ export const AutoCompleteInput = ({ value, onChange, placeholder }) => {
         setSuggestions([]);
     };
 
+    const handleClear = () => {
+        onChange('');
+        setSuggestions([]);
+    };
+
     return (
         <div style={{ position: 'relative' }}>
+            <FontAwesomeIcon icon={faLocationDot} className="location-icon" />
             <input
                 type="text"
                 className="TripInput"
@@ -42,6 +50,11 @@ export const AutoCompleteInput = ({ value, onChange, placeholder }) => {
                 placeholder={placeholder}
                 autoComplete="off"
             />
+            {value && (
+                <span className="clear-icon" onClick={handleClear}>
+                    &times;
+                </span>
+            )}
             {suggestions.length > 0 && (
                 <ul className="autocomplete-dropdown">
                     {suggestions.map((sug, index) => (

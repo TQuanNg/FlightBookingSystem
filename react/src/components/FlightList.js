@@ -6,37 +6,17 @@ export const FlightList = ({ flights, traveler, error }) => {
     const [errorMessage, setErrorMessage] = useState("");
     const [popupVisible, setPopupVisible] = useState(false);
 
-    /*
-    // should change to add to cart
-    const handleSelectFlight = (flight) => {
-        // Get user info from localStorage
-        const user = JSON.parse(localStorage.getItem('user'));
-
-        if (!user) {
-            alert('You must be logged in to proceed with booking.');
-            navigate('/login');
-            return;
-        }
-
-        const bookingDetails = {
-            userId: user.id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            flightDetails: flights,
-        };
-
-        const storingTraveler = {traveler}
-
-        localStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
-        localStorage.setItem('storingTraveler', JSON.stringify(storingTraveler));
-        navigate('/booking-summary');
-    }
-*/
     const handleAddToCart = async (flight) => {
         const user = JSON.parse(localStorage.getItem('user'));
 
         if (!user) {
             alert('You must be logged in to proceed with booking.');
+            
+            localStorage.setItem('pendingSearch', JSON.stringify({
+                flights,
+                traveler,
+            }));
+        
             navigate('/login');
             return;
         }

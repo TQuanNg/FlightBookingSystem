@@ -26,23 +26,23 @@ The backend follows a clean and scalable layered architecture:
 git clone https://github.com/YourUsername/FlightBookingSystem.git
 cd FlightBookingSystem
 
-2️⃣ Backend Setup (Spring Boot)
-Navigate to the backend folder and run:
-
-cd backend
-./mvnw spring-boot:run
-The backend server runs on http://localhost:8080.
-
-3️⃣ Database Setup (PostgreSQL)
+2️⃣ Database Setup (PostgreSQL)
 Make sure PostgreSQL is running and create the required database
 
 CREATE DATABASE flight_booking;
 Update database configurations in application.properties.
 
-4️⃣ Frontend Setup (React)
-Navigate to the frontend folder and run:
+3️⃣ Install Dependencies and Run the App
+From the root folder, run:
 
-cd frontend
 npm install
 npm start
-The frontend app runs on http://localhost:3000.
+
+
+This will:
+
+Start the React frontend on http://localhost:3000
+
+Start the Spring Boot backend on http://localhost:8080
+
+⚠️ Make sure your mvnw.cmd (for Windows) or mvnw (for macOS/Linux) script exists in spring/flightapi.
