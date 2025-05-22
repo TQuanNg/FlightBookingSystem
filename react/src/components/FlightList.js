@@ -11,12 +11,12 @@ export const FlightList = ({ flights, traveler, error }) => {
 
         if (!user) {
             alert('You must be logged in to proceed with booking.');
-            
+
             localStorage.setItem('pendingSearch', JSON.stringify({
                 flights,
                 traveler,
             }));
-        
+
             navigate('/login');
             return;
         }
@@ -28,7 +28,7 @@ export const FlightList = ({ flights, traveler, error }) => {
             flightDetails: flight,
         };
 
-        const storingTraveler = {traveler}
+        const storingTraveler = { traveler }
 
         localStorage.setItem('bookingDetails', JSON.stringify(bookingDetails));
         localStorage.setItem('storingTraveler', JSON.stringify(storingTraveler));
@@ -74,7 +74,17 @@ export const FlightList = ({ flights, traveler, error }) => {
                             <li key={index}>
                                 <div>
                                     <h3>Flight ID: {flight.flightId}</h3>
-                                    <p>Departure: {flight.departureCity}, Arrival: {flight.arrivalCity}, Date: {flight.departureTime}, Price: {flight.price}</p>
+                                    <p>Departure: {flight.departureCity}, Arrival: {flight.arrivalCity}</p>
+                                    <p>
+                                         Date: {new Date(flight.departureTime).toLocaleString('en-US', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: '2-digit',
+                                        hour12: true
+                                    })} </p>
+                                    <p>Price: ${flight.price}</p>
                                     <button onClick={() => handleAddToCart(flight)}>Add to Cart</button>
                                 </div>
                             </li>

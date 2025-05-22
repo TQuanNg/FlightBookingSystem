@@ -14,9 +14,7 @@ export const PurchaseHistory = () => {
     }, []);
 
     useEffect(() => {
-        console.log('runnnnn')
         if (!userDetails) return;
-        console.log('runnnnsasasan')
 
         const fetchPurchaseHistory = async () => {
             try {

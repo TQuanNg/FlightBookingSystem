@@ -41,6 +41,13 @@ export const BookingCart = () => {
         fetchCart();
     }, [userDetails]);
 
+    useEffect(() => {
+        const total = cart.reduce((sum, item) => {
+            return sum + (item.price * item.numberOfTravelers);
+        }, 0);
+        setSubTotal(total);
+    }, [cart]);
+
     const handleSubmit = async (cartItemId) => {
         console.log('user detail ', userDetails.user.id, ' cart ', cartItemId)
         try {
@@ -120,7 +127,7 @@ export const BookingCart = () => {
                     <p style={{ textAlign: 'center' }}>Cart is empty.</p>
                 )
             )}
-            <p2>Sub Total: $</p2>
+            <p2>Sub Total: ${subTotal.toFixed(2)}</p2>
         </div>
     )
 }
